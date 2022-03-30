@@ -4,7 +4,7 @@ let
   nixpkgsPath = pkgs.path;
   fromPkgs = path: pkgs.path + "/${path}";
   evalConfig = import (fromPkgs "nixos/lib/eval-config.nix");
-  buildConfig = { system, configuration ? {} }:
+  buildConfig = { system, configuration ? {}, extraModules ? [] }:
     evalConfig {
       specialArgs = {
         inherit nixpkgsPath;
@@ -12,7 +12,7 @@ let
       modules= [
           (./. + "/${system}.nix")
           configuration
-      ];
+      ] ++ extraModules;
     }
   ;
 in
@@ -42,5 +42,10 @@ in
       system = "aarch64-linux";
       configuration = (fromPkgs "nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix");
     }).config.system.build.sdImage;
+    novaboot = (buildConfig {
+      system = "aarch64-linux";
+      configuration = (fromPkgs "nixos/modules/installer/cd-dvd/system-tarball-novaboot.nix");
+      extraModules = [ ./novaboot-config.nix ];
+    }).config.system.build.novabootTarball;
   };
 }
