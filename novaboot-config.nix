@@ -9,5 +9,9 @@
     # rootPath = "/";
     options = [ "tcp" "nolock" ];
   };
+
   nix.settings.trusted-users = [ "root" "nixos" ];
+
+  # building nixos manual takes long time
+  documentation.nixos.enable = false; 
 }
