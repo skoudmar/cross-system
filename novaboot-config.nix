@@ -13,5 +13,9 @@
   nix.settings.trusted-users = [ "root" "nixos" ];
 
   # building nixos manual takes long time
-  documentation.nixos.enable = false; 
+  documentation.nixos.enable = lib.mkOverride 45 false; 
+
+  # boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux_latest.override {
+  #   # defconfig = "";
+  # });
 }
