@@ -4,9 +4,9 @@
   boot.supportedFilesystems = lib.mkOverride 45 [ "vfat" "nfs" ];
 
   novaboot.nfs.server = {
-    # Fill these params
-    address = "1.2.3.4";
-    rootPath = "/nfsroot";
-    options = [ "nolock" "tcp" "v3" ];
+    # Can also be set using nfsPrefix= and nfsOptions= on kernel command line.
+    # address = "1.2.3.4";
+    # rootPath = "/";
+    options = [ "tcp" "nolock" ];
   };
 }
