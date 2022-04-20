@@ -9,4 +9,5 @@
     # rootPath = "/";
     options = [ "tcp" "nolock" ];
   };
+  nix.settings.trusted-users = [ "root" "nixos" ];
 }
