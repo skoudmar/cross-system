@@ -1,4 +1,6 @@
-{ pkgs ? import ./nixpkgs.nix {} }:
+{ patchPkgs ? true,
+  pkgs ? import ./nixpkgs.nix {patched = patchPkgs;} {}
+}:
 
 let
   nixpkgsPath = pkgs.path;
