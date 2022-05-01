@@ -15,7 +15,21 @@
 
 
     # Utilized by `nix build .`
-    defaultPackage.x86_64-linux = (import ./default.nix {pkgs = nixpkgs;}).aarch64-linux.novaboot;
+    defaultPackage.x86_64-linux = (nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        nixpkgs.nixosModules.novabootTarball
+        ({lib, pkgs, ...}:{
+          nixpkgs.crossSystem = {
+            system = "aarch64-linux";
+          };
+          boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+        })
+        (import ./novaboot-config.nix)
+        nixpkgs.nixosModules.profileMinimal
+        nixpkgs.nixosModules.profileInstallationDevice
+      ];
+    }).config.system.build.novabootTarball;
     
   };
 }
