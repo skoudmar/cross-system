@@ -21,8 +21,4 @@
       experimental-features = nix-command flakes
     '';
   };
-
-  # boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux_latest.override {
-  #   # defconfig = "";
-  # });
 }
